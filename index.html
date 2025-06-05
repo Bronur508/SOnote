@@ -1,14 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="theme-color" content="#ff69b4" />
-    <title>SOnote</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SOnote</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ff66a6" />
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #fff0f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #ff4081;
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      resize: none;
+    }
+    button {
+      background: #ff66a6;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+    .saved {
+      margin-top: 1rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SOnote 💖</h1>
+    <textarea id="note" placeholder="Bugünkü düşüncen nedir Selin?"></textarea>
+    <button onclick="saveNote()">Kaydet</button>
+    <div class="saved" id="savedNote"></div>
+  </div>
+
+  <script>
+    const note = document.getElementById("note");
+    const savedNote = document.getElementById("savedNote");
+
+    function saveNote() {
+      const content = note.value;
+      if (content.trim()) {
+        localStorage.setItem("sonote-note", content);
+        showNote();
+        note.value = "";
+      }
+    }
+
+    function showNote() {
+      const saved = localStorage.getItem("sonote-note");
+      if (saved) {
+        savedNote.innerHTML = `<h3>Kaydedilen Not:</h3><p>${saved}</p>`;
+      }
+    }
+
+    showNote();
+  </script>
+</body>
 </html>
